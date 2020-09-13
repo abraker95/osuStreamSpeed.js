@@ -39,17 +39,17 @@ function beginTest() {
     beginTime = -1;
     
     key1 = $('#key1').val().toLowerCase();
-	key2 = $('#key2').val().toLowerCase();
-	
-	key1_press = false
-	key2_press = false
+    key2 = $('#key2').val().toLowerCase();
+    
+    key1_press = false
+    key2_press = false
     
     mouse = $("input[name='cmouse']").prop("checked");
     
     $("div#status").html("Test ready, press key 1 or key 2 to begin.");
-	$("div#Result").html("\
-		Number of taps: 0<br> \
-		Seconds elapsed: 0<br> \
+    $("div#Result").html("\
+        Number of taps: 0<br> \
+        Seconds elapsed: 0<br> \
         Stream Speed: 0 bpm<br>\
         Unstable Rate: 0\
     ");
@@ -121,14 +121,14 @@ function endTest()
 function update(click) 
 {
     if (click) 
-    {	
+    {    
         if (timediffs.length > 0)
         {
-			num = Math.min(timediffs.length, 3)
+            num = Math.min(timediffs.length, 3)
             sum = timediffs.slice(-num).reduce((a, b) => a + b);
-			avg = sum / num;
-			
-			avg_total = timediffs.reduce((a, b) => a + b)/timediffs.length;
+            avg = sum / num;
+            
+            avg_total = timediffs.reduce((a, b) => a + b)/timediffs.length;
 
             $.each(timediffs, function(i,v) {
                 deviations[i] = (v - avg_total) * (v - avg_total);
@@ -157,14 +157,14 @@ function update(click)
     else 
     {
         counterNumber = (counterNumber + 1) % 30;
-		streamtime = (Date.now() - beginTime)/1000;
-		num_taps = clickTimes.length.toString();
+        streamtime = (Date.now() - beginTime)/1000;
+        num_taps = clickTimes.length.toString();
 
         if (timediffs.length > 2) 
         {
-			$("div#Result").html("\
-				Number of taps: " + num_taps + "<br>\
-				Seconds elapsed: " + streamtime.toFixed(3) + "<br> \
+            $("div#Result").html("\
+                Number of taps: " + num_taps + "<br>\
+                Seconds elapsed: " + streamtime.toFixed(3) + "<br> \
                 Stream Speed: " + (15000/avg_total).toFixed(2) + " bpm<br>\
                 Unstable Rate: " + (Math.round(unstableRate * 100000) / 100000).toFixed(3));
         }
@@ -174,81 +174,81 @@ function update(click)
 
 $(document).keyup(function(event)
 {
-	if (event.keyCode == 13 && testrunning == false)
-		beginTest();
+    if (event.keyCode == 13 && testrunning == false)
+        beginTest();
 
-	if (testrunning == false)
-		return;
+    if (testrunning == false)
+        return;
 
     if ((strkey == key1) && (key1_press == true))
-	{	
-		key1_press = false;
-		return;
-	}
+    {    
+        key1_press = false;
+        return;
+    }
 
-	if ((strkey == key2) && (key2_press == true)) 
-	{
-		key2_press = false;
-		return;
-	}
+    if ((strkey == key2) && (key2_press == true)) 
+    {
+        key2_press = false;
+        return;
+    }
 });
 
 
 $(document).keydown(function(event)
 {
     if (event.keyCode == 13 && testrunning == false)
-		beginTest();
+        beginTest();
         
-	if (testrunning == false)
-		return;
+    if (testrunning == false)
+        return;
 
-	//console.log(String.fromCharCode(event.which), key1);
+    //console.log(String.fromCharCode(event.which), key1);
 
-	strkey = String.fromCharCode(event.which).toLowerCase();
-	key_ok = false;
+    strkey = String.fromCharCode(event.which).toLowerCase();
+    key_ok = false;
 
-	if (strkey == key1)
-	{	
-		if (key1_press == false) 
-		{
-			key_ok = true;
-			key1_press = true;
-		}
-	}
+    if (strkey == key1)
+    {    
+        if (key1_press == false) 
+        {
+            key_ok = true;
+            key1_press = true;
+        }
+    }
 
-	if (strkey == key2)
-	{
-		if (key2_press == false) 
-		{
-			key_ok = true;
-			key2_press = true;
-		}
-	}
-	
-	if (key_ok == false) 
-		return;
-	
-	if(beginTime == -1)
-	{
-		beginTime = Date.now();
-		$("div#status").html("Test currently running.");
-		updater = setInterval(function() { update(false); }, 16.6);
-		
-		if ($("input[name='roption']:checked").val() == "time") 
-		{
-			endTimer = setTimeout(function() { endTest(); }, timeLimit * 1000);
-		}
-	}
-	else
-	{
-		update(true);
-	}
+    if (strkey == key2)
+    {
+        if (key2_press == false) 
+        {
+            key_ok = true;
+            key2_press = true;
+        }
+    }
+    
+    if (key_ok == false) 
+        return;
+    
+    if(beginTime == -1)
+    {
+        beginTime = Date.now();
+        $("div#status").html("Test currently running.");
+        updater = setInterval(function() { update(false); }, 16.6);
+        
+        if ($("input[name='roption']:checked").val() == "time") 
+        {
+            endTimer = setTimeout(function() { endTest(); }, timeLimit * 1000);
+        }
+    }
+    else
+    {
+        update(true);
+    }
 
-	if ((clickTimes.length == clickLimit) && ($("input[name='roption']:checked").val() == "clicks"))
-	{
-		endTest();
-		return;
-	}
+    if ((clickTimes.length == clickLimit) && ($("input[name='roption']:checked").val() == "clicks"))
+    {
+        endTest();
+        return;
+    }
 });
 
 
