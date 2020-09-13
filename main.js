@@ -264,7 +264,7 @@ function stopEvent(event)
 $(document).ready(function() 
 {    
     if(!localStorage.getItem('clickLimit'))
-        $("input#clickNum").val("20");
+        $("input#clickNum").val("100");
     else
         $("input#clickNum").val(localStorage.getItem('clickLimit'));
         
