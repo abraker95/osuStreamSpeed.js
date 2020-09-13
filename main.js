@@ -10,7 +10,7 @@ var runNumber = 0;
 var counterNumber = 0;
 
 var baseData = {
-    type: "spline",
+    type: "line",
     dataPoints: []
 };
     
@@ -68,7 +68,7 @@ function beginTest() {
     if (runNumber > 0)
     {
         $("#chartContainer").CanvasJSChart().options.data.push({
-            type: "spline",
+            type: "line",
             dataPoints: []
         });
         $("#chartContainer").CanvasJSChart().options.data[runNumber - 1].visible = false;
@@ -303,7 +303,8 @@ $(document).ready(function()
             //interval: 1
         },
         data: [{
-            type: "spline", //try changing to column, area
+            type: "line", //try changing to column, area
+            color: "#C24642",
             dataPoints: []
         }]
     });
