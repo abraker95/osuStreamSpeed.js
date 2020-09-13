@@ -128,14 +128,14 @@ function update(click)
             sum = timediffs.slice(-num).reduce((a, b) => a + b);
             avg = sum / num;
             
-            avg_total = timediffs.reduce((a, b) => a + b)/timediffs.length;
+            avg_total = timediffs.slice(-timediffs.length/2).reduce((a, b) => a + b)/(timediffs.length/2);
 
             $.each(timediffs, function(i,v) {
                 deviations[i] = (v - avg_total) * (v - avg_total);
             });
             
-            variance = deviations.reduce(function(a, b) {return a + b;});
-            std = Math.sqrt(variance / deviations.length);
+            variance = deviations.slice(-deviations.length/2).reduce(function(a, b) {return a + b;});
+            std = Math.sqrt(variance / deviations.length/2);
             unstableRate = std * 10;
         }
         
