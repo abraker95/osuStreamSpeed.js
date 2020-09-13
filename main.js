@@ -51,7 +51,8 @@ function beginTest() {
         Number of taps: 0<br> \
         Seconds elapsed: 0<br> \
         Stream Speed: 0 bpm<br>\
-        Unstable Rate: 0\
+		Unstable Rate: 0<br>\
+		Score: 0\
     ");
     
     localStorage.setItem('clickLimit', clickLimit);
@@ -158,15 +159,19 @@ function update(click)
     {
         counterNumber = (counterNumber + 1) % 30;
         streamtime = (Date.now() - beginTime)/1000;
-        num_taps = clickTimes.length.toString();
+		num_taps = clickTimes.length.toString();
+		stream_speed = 15000/avg_total;
+		unstable_rate = Math.round(unstableRate * 100000) / 100000;
+		score = 20*Math.pow(stream_speed,2)/Math.pow(unstable_rate,2);
 
         if (timediffs.length > 2) 
         {
             $("div#Result").html("\
                 Number of taps: " + num_taps + "<br>\
                 Seconds elapsed: " + streamtime.toFixed(3) + "<br> \
-                Stream Speed: " + (15000/avg_total).toFixed(2) + " bpm<br>\
-                Unstable Rate: " + (Math.round(unstableRate * 100000) / 100000).toFixed(3));
+                Stream Speed: " + (stream_speed).toFixed(2) + " bpm<br>\
+				Unstable Rate: " + (unstable_rate).toFixed(3) + "<br>\
+				Score: " + (score).toFixed(2));
         }
     }
 }
